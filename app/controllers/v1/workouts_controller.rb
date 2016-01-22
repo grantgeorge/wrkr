@@ -5,13 +5,14 @@ module V1
 
     # GET /v1/workouts
     def index
-      includes = params["includes"].split(',')
 
-      Rails.logger.debug "includes #{includes.inspect}".light_yellow
+      @includes = params["includes"].split(',') if params["includes"]
+
+      Rails.logger.debug "@includes #{@includes.inspect}".light_yellow
 
       @workouts = Workout.all.includes(:user, :comments)
 
-      render json: @workouts
+      render json: @workouts, includes: @includes
     end
 
     # GET /v1/workouts/1
