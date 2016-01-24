@@ -11,22 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160122010712) do
+ActiveRecord::Schema.define(version: 20160122060446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "comments", force: :cascade do |t|
-    t.text     "body"
+  create_table "exercise_templates", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "published"
+    t.integer  "upvotes_count"
+    t.integer  "downvotes_count"
+    t.integer  "comments_count"
+    t.integer  "completions_count"
     t.integer  "user_id"
-    t.integer  "commentable_id"
-    t.string   "commentable_type"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  add_index "comments", ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+  add_index "exercise_templates", ["user_id"], name: "index_exercise_templates_on_user_id", using: :btree
+
+  create_table "exercise_templates_workout_templates", id: false, force: :cascade do |t|
+    t.integer "workout_template_id",  null: false
+    t.integer "exercise_template_id", null: false
+  end
+
+  add_index "exercise_templates_workout_templates", ["exercise_template_id", "workout_template_id"], name: "index_workout_templates_exercise_templates", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
@@ -62,22 +72,22 @@ ActiveRecord::Schema.define(version: 20160122010712) do
   add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
-  create_table "workouts", force: :cascade do |t|
+  create_table "workout_templates", force: :cascade do |t|
+    t.integer  "user_id"
     t.string   "name"
     t.text     "description"
     t.integer  "upvotes_count"
     t.integer  "downvotes_count"
     t.integer  "comments_count"
-    t.integer  "workout_completions_count"
+    t.integer  "completions_count"
     t.integer  "exercises_count"
     t.boolean  "published"
-    t.integer  "user_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  add_index "workouts", ["user_id"], name: "index_workouts_on_user_id", using: :btree
+  add_index "workout_templates", ["user_id"], name: "index_workout_templates_on_user_id", using: :btree
 
-  add_foreign_key "comments", "users"
-  add_foreign_key "workouts", "users"
+  add_foreign_key "exercise_templates", "users"
+  add_foreign_key "workout_templates", "users"
 end

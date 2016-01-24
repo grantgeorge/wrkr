@@ -8,5 +8,6 @@ class User < ActiveRecord::Base
          :confirmable
   include DeviseTokenAuth::Concerns::User
 
-  has_many :comments
+  has_many :workouts
+  has_many :exercises
 end

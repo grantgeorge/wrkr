@@ -8,7 +8,8 @@ Rails.application.routes.draw do
       mount_devise_token_auth_for 'User', at: '/auth'
 
       # Resources
-      resources :workouts, except: [:new, :edit]
+      resources :workout_templates, except: [:new, :edit]
+      resources :exercise_templates, except: [:new, :edit]
     end
   end
 

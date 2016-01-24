@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :workout do
+  factory :workout_template do
     name { Faker::App.name }
     description { Faker::Hacker.say_something_smart }
     upvotes_count 0
