@@ -6,7 +6,6 @@ module V1
     # GET /exercise_templates.json
     def index
       @exercise_templates = ExerciseTemplate.all
-
       render json: @exercise_templates
     end
 
@@ -50,12 +49,16 @@ module V1
 
     private
 
-      def set_exercise_template
-        @exercise_template = ExerciseTemplate.find(params[:id])
-      end
+    def set_exercise_template
+      @exercise_template = ExerciseTemplate.find(params[:id])
+    end
 
-      def exercise_template_params
-        params.require(:exercise_template).permit(:name, :description, :published, :upvotes_count, :downvotes_count, :comments_count, :completions_count, :references)
-      end
+    def exercise_template_params
+      params.require(:exercise_template).permit(:name, :description,
+                                                :published, :upvotes_count,
+                                                :downvotes_count,
+                                                :comments_count,
+                                                :completions_count)
+    end
   end
 end

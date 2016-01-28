@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       # Resources
       resources :workout_templates, except: [:new, :edit]
       resources :exercise_templates, except: [:new, :edit]
+      resources :exercises, except: [:new, :edit]
+      resources :workouts, except: [:new, :edit]
     end
   end
 

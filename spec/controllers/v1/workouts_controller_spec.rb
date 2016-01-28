@@ -51,6 +51,21 @@ RSpec.describe V1::WorkoutsController, type: :controller do
     end
   end
 
+  describe 'GET #new' do
+    it 'assigns a new workout as @workout' do
+      get :new, {}, valid_session
+      expect(assigns(:workout)).to be_a_new(Workout)
+    end
+  end
+
+  describe 'GET #edit' do
+    it 'assigns the requested workout as @workout' do
+      workout = Workout.create! valid_attributes
+      get :edit, { id: workout.to_param }, valid_session
+      expect(assigns(:workout)).to eq(workout)
+    end
+  end
+
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new Workout' do

@@ -32,9 +32,9 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'faker'
   gem 'factory_girl_rails'
-  gem 'guard-rspec'
   gem 'spring-commands-rspec'
   gem 'database_cleaner'
+  gem 'rb-fsevent' if `uname` =~ /Darwin/
 
   # E2E Testing
   gem 'capybara'
@@ -43,6 +43,7 @@ group :test, :development do
 
   # Logging/debugging
   gem 'byebug'
+  gem 'pry-byebug'
 end
 
 group :development do
@@ -53,6 +54,7 @@ group :development do
   gem 'ruby_gntp'
   gem 'guard'
   gem 'guard-rubocop'
+  gem 'guard-rspec'
   gem 'guard-brakeman'
   gem 'pry-rails'
 end
