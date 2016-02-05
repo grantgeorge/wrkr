@@ -1,16 +1,22 @@
 module V1
   #
   class WorkoutTemplatesController < ApplicationController
-    before_action :set_workout_template, only: [:show, :update, :destroy]
+    before_action :set_workout_template, only: [:update, :destroy]
 
     # GET /workout_templates
     def index
-      @workout_templates = WorkoutTemplate.all
+      # @workout_templates = WorkoutTemplate.all
+      @workout_templates = WorkoutTemplate.eager_load(:exercise_templates,
+        :comments).all
       render json: @workout_templates
     end
 
     # GET /workout_templates/1
     def show
+      @workout_template = WorkoutTemplate.eager_load(:exercise_templates,
+        :comments, :upvotes, :downvotes)
+        .find(params[:id])
+      logger.debug @workout_template.inspect.light_yellow
       render json: @workout_template
     end
 

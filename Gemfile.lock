@@ -99,6 +99,9 @@ GEM
     fastercsv (1.5.5)
     ffi (1.9.10)
     formatador (0.2.5)
+    fuubar (2.0.0)
+      rspec (~> 3.0)
+      ruby-progressbar (~> 1.4)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     guard (2.13.0)
@@ -315,6 +318,7 @@ DEPENDENCIES
   devise_token_auth
   factory_girl_rails
   faker
+  fuubar
   guard
   guard-brakeman
   guard-rspec

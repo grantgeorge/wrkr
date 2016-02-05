@@ -1,5 +1,3 @@
 class IntervalSerializer < ActiveModel::Serializer
-  attributes :id,
-             :time,
-             :exercise_id
+  attributes :id, :duration, :number_of_reps, :started_at, :completed_at
 end

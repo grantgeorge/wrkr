@@ -1,5 +1,5 @@
 class ExerciseSerializer < ActiveModel::Serializer
-  attributes :id, :workout_id, :user_id
+  attributes :id, :workout_id
   has_one :exercise_template, embed: :object, serializer: ExerciseTemplateSerializer, include: true
   has_many :completed_sets, embed: :object, serializer: CompletedSetSerializer, include: true
   has_many :intervals, embed: :object, serializer: IntervalSerializer, include: true
@@ -10,10 +10,6 @@ class ExerciseSerializer < ActiveModel::Serializer
 
   def workout_id?
     object.workout_id
-  end
-
-  def user_id?
-    object.user_id
   end
 
   def include_exercise_template?

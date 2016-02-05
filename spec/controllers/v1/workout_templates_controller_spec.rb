@@ -37,19 +37,32 @@ RSpec.describe V1::WorkoutTemplatesController, type: :controller do
 
   describe 'GET #index' do
     it 'assigns all workout_templates as @workout_templates' do
-      # workout_template = WorkoutTemplate.create! valid_attributes
       workout_template = create(:workout_template)
-      binding.pry
       get :index, {}, valid_session
       expect(assigns(:workout_templates)).to eq([workout_template])
     end
   end
 
   describe 'GET #show' do
-    it 'assigns the requested workout_template as @workout_template' do
-      workout_template = WorkoutTemplate.create! valid_attributes
+    before do
       get :show, { id: workout_template.to_param }, valid_session
-      expect(assigns(:workout_template)).to eq(workout_template)
+    end
+
+    subject(:results) { JSON.parse(response.body) }
+
+    context 'when the workout template exists' do
+      let(:workout_template) { create(:workout_template) }
+
+      it { expect(response.status).to eq 200 }
+      it { expect(results['id']).to eq workout_template.id }
+      it { expect(results['name']).to eq workout_template.name }
+      it { expect(results['description']).to eq workout_template.description }
+      it { expect(assigns(:workout_template)).to eq workout_template }
+    end
+
+    context 'when the workout_template doesn\'t exist' do
+      let(:workout_template) { build_stubbed(:workout_template) }
+      it { expect(response.status).to eq 400 }
     end
   end
 

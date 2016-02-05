@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :intervals, except: [:new, :edit]
+  resources :lift_sets, except: [:new, :edit]
+  resources :lift_sets, except: [:new, :edit]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -7,11 +10,25 @@ Rails.application.routes.draw do
       # Auth
       mount_devise_token_auth_for 'User', at: '/auth'
 
-      # Resources
-      resources :workout_templates, except: [:new, :edit]
-      resources :exercise_templates, except: [:new, :edit]
-      resources :exercises, except: [:new, :edit]
-      resources :workouts, except: [:new, :edit]
+      # User actions
+      concern :upvotable do resources :upvotes, only: [:index, :create] end
+      concern :downvotable do resources :downvotes, only: [:index, :create] end
+      concern :commentable do resources :comments, only: [:index, :create] end
+      resources :upvotes, only: [:show, :update, :destroy]
+      resources :downvotes, only: [:show, :update, :destroy]
+      resources :comments, only: [:show, :update, :destroy]
+
+      # Template Resources
+      resources :workout_templates, except: [:new, :edit], concerns: [:upvotable,
+        :downvotable, :commentable]
+      resources :exercise_templates, except: [:new, :edit], concerns: [:upvotable,
+        :downvotable, :commentable]
+
+      # Workout Resources
+      resources :exercises, except: [:new, :edit], concerns: [:upvotable,
+        :downvotable, :commentable]
+      resources :workouts, except: [:new, :edit], concerns: [:upvotable,
+        :downvotable, :commentable]
     end
   end
 

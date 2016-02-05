@@ -1,9 +1,8 @@
 module V1
   class WorkoutsController < ApplicationController
-    before_action :set_workout, only: [:show, :update, :destroy]
+    before_action :set_workout, only: [:update, :destroy]
 
     # GET /workouts
-    # GET /workouts.json
     def index
       @workouts = Workout.all
 
@@ -11,13 +10,16 @@ module V1
     end
 
     # GET /workouts/1
-    # GET /workouts/1.json
     def show
+      # @workout_template = WorkoutTemplate.eager_load(:exercise_templates,
+      #   :comments, :upvotes, :downvotes)
+      #   .find(params[:id])
+      @workout = Workout.eager_load(:lift_exercises, :interval_exercises)
+        .find(params[:id])
       render json: @workout
     end
 
     # POST /workouts
-    # POST /workouts.json
     def create
       @workout = Workout.new(workout_params)
 
@@ -29,7 +31,6 @@ module V1
     end
 
     # PATCH/PUT /workouts/1
-    # PATCH/PUT /workouts/1.json
     def update
       @workout = Workout.find(params[:id])
 
@@ -41,7 +42,6 @@ module V1
     end
 
     # DELETE /workouts/1
-    # DELETE /workouts/1.json
     def destroy
       @workout.destroy
 

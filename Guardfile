@@ -70,7 +70,7 @@ group :red_green_refactor, halt_on_fail: true do
     end
   end
 
-  guard :rubocop, all_on_start: false, cmd: 'rubocop' do
+  guard :rubocop, all_on_start: false, cmd: 'spring rubocop' do
     watch(/.+\.rb$/)
     watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
   end

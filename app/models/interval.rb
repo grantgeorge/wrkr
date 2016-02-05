@@ -1,3 +1,3 @@
 class Interval < ActiveRecord::Base
-  belongs_to :exercise
+  belongs_to :exercise, :foreign_key => 'exercise_id', counter_cache: true
 end

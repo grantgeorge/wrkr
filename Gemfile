@@ -44,6 +44,8 @@ group :test, :development do
   # Logging/debugging
   gem 'byebug'
   gem 'pry-byebug'
+
+  gem 'fuubar'
 end
 
 group :development do
